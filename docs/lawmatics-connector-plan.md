@@ -174,17 +174,17 @@ Default open-source posture.
 
 This is secure and self-contained, but not literally zero credential setup.
 
-### Option B: hosted OAuth broker
+### Option B: Railway-hosted OAuth broker
 
 Preferred convenience path.
 
-- Mattergate maintainers operate an approved Lawmatics OAuth app and a narrow broker, likely on Cloudflare Workers with KV/D1 for short-lived state.
+- Mattergate maintainers operate an approved Lawmatics OAuth app and a narrow broker deployed on Railway from a separate GitHub repo, likely `mattergate-oauth-broker`.
 - Self-hosted deployments redirect admins through the broker.
 - Broker handles the client secret and returns a short-lived installation handoff to the self-hosted instance.
 - Broker should not proxy normal MCP traffic or Lawmatics API calls.
 - Broker should not store Lawmatics access tokens long-term; it should exchange, hand off, and delete.
 
-This can provide the “no API keys/client tokens” user experience for admins, while keeping the maintainer `client_secret` out of open-source deployments. It does create a serious trust boundary and may require Lawmatics approval. It needs tenant isolation, redirect allowlists, signed state, replay protection, short-lived handoff codes, revocation guidance, audit, abuse controls, and clear privacy terms.
+This can provide the “no API keys/client tokens” user experience for admins, while keeping the maintainer `client_secret` out of open-source deployments. It does create a serious trust boundary and may require Lawmatics approval. It needs tenant isolation, redirect allowlists, signed state, replay protection, short-lived handoff codes, revocation guidance, audit, abuse controls, and clear privacy terms. Railway is the preferred hosting target because Dan already uses it and GitHub → Railway auto-deploy is the normal operational path.
 
 ### Option C: hosted Mattergate
 

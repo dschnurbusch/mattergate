@@ -40,6 +40,7 @@ Tracked project docs live in `docs/`:
 - `docs/policy-model.md` — RBAC/ABAC permission model.
 - `docs/connector-development.md` — how to add connectors safely.
 - `docs/deployment.md` — local/self-hosted deployment notes.
+- `docs/oauth-broker-railway.md` — Railway-hosted OAuth broker plan for low-friction connector installs.
 - `docs/self-hosting-railway.md` — future one-click Railway deploy/self-hosting plan.
 
 Local research files live in `docs/research/` and are intentionally gitignored. They currently include:

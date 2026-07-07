@@ -22,6 +22,7 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 - [x] Brand/positioning pass and working name direction.
 - [x] Add landing page workspace scaffold.
 - [x] Inspect existing Railway MCP Lawmatics tools and document first-connector plan.
+- [x] Swap OAuth broker deployment plan to Railway with BYO credentials as Advanced setup fallback.
 
 ## Next actions
 
@@ -34,14 +35,15 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 - [ ] Add real admin CRUD endpoints.
 - [ ] Build Lawmatics as the first real connector.
 - [ ] Convert Railway self-hosting plan into a tested template after persistence, auth, migrations, and secrets are production-ready.
-- [ ] Design hosted OAuth broker on Cloudflare Workers with short-lived install handoff and strict redirect/instance validation.
+- [ ] Design Railway-hosted OAuth broker with short-lived install handoff and strict redirect/instance validation, likely in separate `mattergate-oauth-broker` repo.
 - [ ] Request/confirm Lawmatics developer app access for Dan's existing account.
 
 ## Important decisions
 
 - Use BYO vendor OAuth/API credentials. Do not ship shared OAuth client secrets in open source.
 - Lawmatics is first connector; port safe read tools first, then timeline/financial reads, then dry-run/confirmed writes.
-- Keep one-click self-hosting BYO OAuth as the safe default; prefer a narrow Cloudflare Workers OAuth broker as the convenience path if Lawmatics approves the app/flow.
+- Keep one-click self-hosting BYO OAuth as the Advanced setup fallback; prefer a narrow Railway-hosted OAuth broker as the normal convenience path if Lawmatics approves the app/flow.
+- Keep the OAuth broker as a separate repo/service from the self-hosted gateway because it owns maintainer vendor OAuth secrets and may later support hosted Mattergate.
 - Treat `docs/research/` as local ignored research notes. Distill stable decisions into tracked docs.
 - Start with a mock connector and policy engine before vendor-specific work.
 - Hide unauthorized tools and enforce policy again at invocation time.

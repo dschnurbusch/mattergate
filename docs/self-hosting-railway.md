@@ -106,16 +106,50 @@ ${APP_URL}/api/connectors/:connectorId/oauth/callback
 
 For Lawmatics, plan to document the exact callback path once the connector route is implemented.
 
-## OAuth app model: BYO credentials vs broker option
+## OAuth app model: broker by default, BYO in Advanced setup
 
-### Default: bring your own vendor OAuth app
+### Preferred convenience path: Railway-hosted OAuth broker
 
-The open-source/self-hosted default should remain BYO vendor credentials. For Lawmatics, this means the self-hoster eventually has `LAWMATICS_CLIENT_ID` and `LAWMATICS_CLIENT_SECRET` configured server-side, but ordinary firm admins and staff never handle raw API access tokens.
+The normal public/self-hosted UX should use a maintainer-hosted OAuth broker deployed on Railway from a separate GitHub repo.
 
-Once those OAuth app credentials exist, the admin UX can still be a clean button:
+Target user flow:
 
 ```text
 Connectors → Lawmatics → Integrate Lawmatics
+```
+
+The self-hosted Mattergate deployment redirects the admin through the broker. The broker owns the maintainer-approved Lawmatics OAuth app credentials, exchanges the authorization code, and hands the resulting token material back to the self-hosted Mattergate instance through a short-lived one-time handoff. The self-hosted instance then stores the vendor token encrypted in its own database.
+
+Why Railway:
+
+- Dan already runs multiple Railway apps, so Railway's monthly floor is not a blocker.
+- GitHub → Railway auto-deploy is the normal operational path.
+- The broker is low-volume install-time infrastructure, not a hot-path API proxy, so incremental usage should be small.
+- Keeping it on Railway avoids adding another platform unless there is a concrete reason.
+
+Broker responsibilities:
+
+- Hold the maintainer-owned Lawmatics OAuth `client_secret` as a Railway secret.
+- Use one stable broker callback URL registered with Lawmatics.
+- Validate self-hosted instance registration and redirect destinations.
+- Create short-lived OAuth state and one-time handoff codes.
+- Exchange the Lawmatics authorization code server-side.
+- Deliver token material only to the requesting Mattergate instance, preferably encrypted to that instance's public key.
+- Delete short-lived handoff material after redemption or expiry.
+- Record minimal audit metadata without logging access tokens, client secrets, matter data, or raw OAuth codes.
+
+Broker deployment should be a separate repo/service, likely `mattergate-oauth-broker`, because it is a different trust boundary from the open-source self-hosted gateway. The broker code may be public, but its Railway variables hold maintainer-owned OAuth secrets. It should not be included in the one-click self-hosted Railway template.
+
+See `docs/oauth-broker-railway.md` for the dedicated broker plan.
+
+### Advanced setup fallback: bring your own vendor OAuth app
+
+BYO vendor credentials should remain available under an **Advanced setup** section for firms that do not want to trust the broker, need their own vendor review screen, or have compliance reasons to own every OAuth app.
+
+For Lawmatics, this means the self-hoster configures `LAWMATICS_CLIENT_ID` and `LAWMATICS_CLIENT_SECRET` server-side. Once those OAuth app credentials exist, the admin UX can still be a clean button:
+
+```text
+Connectors → Lawmatics → Advanced setup → Use my own OAuth app → Integrate Lawmatics
 ```
 
 That button should start the OAuth redirect and token exchange. The user should not paste a Lawmatics access token.
@@ -127,37 +161,12 @@ BYO credential model:
 - The deployment owns its own tokens and audit boundaries.
 - The project does not ship shared OAuth client secrets.
 
-This avoids placing maintainer-owned credentials in every self-hosted deployment, but it has limitations:
+This avoids relying on a maintainer-hosted broker, but it has limitations:
 
 - Some vendors may restrict app creation, require manual approval, or only grant developer access to existing customers.
 - Self-hosters must understand exact callback URLs and app configuration.
-- Vendor review screens and app names will belong to the self-hoster, not the Legal MCP Gateway maintainers.
+- Vendor review screens and app names will belong to the self-hoster, not the Mattergate maintainers.
 - Support burden is higher because each deployment can have different vendor app settings.
-
-### Preferred convenience path: hosted OAuth broker
-
-A maintainer-hosted broker can reduce vendor setup friction by owning an approved OAuth app and brokering authorization into self-hosted deployments. This is acceptable for the project if the broker stays narrow, cheap, and security-focused.
-
-Cost target: near-zero. The broker should only handle install-time OAuth redirects and token handoff, not normal MCP traffic or vendor API calls. A Cloudflare Worker with KV/D1 for short-lived state is the preferred shape because the free tier is enough for expected install volume and there is no always-on container to pay for.
-
-Broker responsibilities:
-
-- Hold the maintainer-owned Lawmatics OAuth `client_secret` as a platform secret.
-- Use one stable broker callback URL registered with Lawmatics.
-- Validate self-hosted instance registration and redirect destinations.
-- Create short-lived OAuth state and handoff codes.
-- Exchange the Lawmatics authorization code server-side.
-- Deliver token material only to the requesting Mattergate instance, preferably encrypted to that instance's public key.
-- Delete short-lived handoff material after redemption or expiry.
-- Record minimal audit metadata without logging access tokens, client secrets, matter data, or raw OAuth codes.
-
-Broker considerations:
-
-- This is a real trust boundary: the broker sees vendor OAuth codes and may briefly handle access tokens.
-- It must avoid exposing maintainer client secrets to Railway deployments.
-- It needs tenant isolation, redirect allowlists, signed state, replay protection, rate limits, abuse controls, consent logging, and revocation guidance.
-- It may require Lawmatics approval and must comply with vendor terms.
-- It should not store Lawmatics access tokens long-term unless Mattergate later offers a hosted/SaaS product.
 
 ## Lawmatics OAuth admin click flow
 
