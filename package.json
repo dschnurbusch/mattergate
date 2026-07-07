@@ -12,7 +12,8 @@
     "packages/mcp",
     "apps/server",
     "apps/cli",
-    "apps/admin"
+    "apps/admin",
+    "apps/landing"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
@@ -21,6 +22,7 @@
     "verify": "npm run build && npm test",
     "dev:server": "npm -w @legal-mcp-gateway/server run dev",
     "dev:admin": "npm -w @legal-mcp-gateway/admin run dev",
+    "dev:landing": "npm -w @legal-mcp-gateway/landing run dev",
     "dev:stdio": "npm -w @legal-mcp-gateway/cli run dev -- stdio"
   },
   "devDependencies": {

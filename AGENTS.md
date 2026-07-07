@@ -21,6 +21,7 @@ npm test
 npm run verify
 npm run dev:server
 npm run dev:admin
+npm run dev:landing
 npm run dev:stdio
 ```
 
@@ -32,11 +33,14 @@ Tracked project docs live in `docs/`:
 
 - `docs/project-plan.md` — MVP scope, architecture, roadmap, and build phases.
 - `docs/project-tracker.md` — current status, decisions, next actions, and open questions.
+- `docs/brand.md` — working brand direction, name candidates, recommended name, and landing-page copy blocks.
 - `docs/auth-model.md` — user login, per-client MCP grants, token validation, and Lawmatics auth assumptions.
+- `docs/lawmatics-connector-plan.md` — first connector scope, existing Railway MCP Lawmatics tools to port, OAuth flow, and API pitfalls.
 - `docs/architecture.md` — system architecture.
 - `docs/policy-model.md` — RBAC/ABAC permission model.
 - `docs/connector-development.md` — how to add connectors safely.
 - `docs/deployment.md` — local/self-hosted deployment notes.
+- `docs/self-hosting-railway.md` — future one-click Railway deploy/self-hosting plan.
 
 Local research files live in `docs/research/` and are intentionally gitignored. They currently include:
 

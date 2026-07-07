@@ -10,16 +10,18 @@ That makes a separate MCP permission layer useful. Not because every vendor is b
 
 ## MVP goal
 
-A thin, secure policy-enforcing MCP gateway:
+A thin, secure policy-enforcing MCP gateway. Working brand direction: **Mattergate — Legal MCP Gateway**.
 
-- Runs locally or self-hosted.
-- Lets an admin connect vendor accounts later.
-- Provisions team users.
-- Assigns job-title presets.
-- Filters MCP tool visibility per user.
-- Enforces permission on every tool invocation.
-- Logs audit metadata.
-- Provides a connector SDK for future legal-tech integrations.
+Mattergate should:
+
+- Run locally or self-hosted.
+- Let an admin connect vendor accounts later.
+- Provision team users.
+- Assign job-title presets.
+- Filter MCP tool visibility per user.
+- Enforce permission on every tool invocation.
+- Log audit metadata.
+- Provide a connector SDK for future legal-tech integrations.
 
 ## Non-goals for the scaffold
 

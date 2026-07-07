@@ -1,0 +1,1 @@
+{"name":"@legal-mcp-gateway/landing","version":"0.1.0","type":"module","private":true,"scripts":{"build":"vite build","typecheck":"tsc -p tsconfig.json --noEmit","dev":"vite --host 127.0.0.1"},"dependencies":{"@vitejs/plugin-react":"^5.1.1","vite":"^7.2.7","react":"^19.2.3","react-dom":"^19.2.3","@types/react":"^19.2.7","@types/react-dom":"^19.2.3"},"devDependencies":{}}

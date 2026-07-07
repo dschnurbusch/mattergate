@@ -1,8 +1,8 @@
-# Legal MCP Gateway
+# Mattergate
 
 A self-hostable MCP permissions gateway for legal-tech systems.
 
-The goal is simple: connect legal apps once, then expose only the MCP tools each team member should actually use. It is not a data lake. It is a thin policy and audit layer over vendor APIs.
+The goal is simple: connect legal apps once, then expose only the MCP tools each team member should actually use. Mattergate is not a data lake. It is a thin policy and audit layer over vendor APIs.
 
 ## Current status
 
@@ -14,6 +14,7 @@ This is a scaffold. It includes:
 - MCP gateway core that filters visible tools and enforces permissions on invocation
 - Minimal HTTP server and CLI placeholders
 - Lightweight admin UI scaffold
+- Public landing page app for the open-source project
 - Research and planning docs
 
 Real Lawmatics/Filevine/Clio/MyCase/etc. connectors come later.
@@ -43,6 +44,12 @@ Admin UI scaffold:
 npm run dev:admin
 ```
 
+Public landing page:
+
+```bash
+npm run dev:landing
+```
+
 ## Repository layout
 
 ```txt
@@ -50,6 +57,7 @@ apps/
   server/     Minimal HTTP gateway API scaffold
   cli/        Local stdio/CLI scaffold
   admin/      Lightweight admin UI scaffold
+  landing/    Public open-source project landing page
 packages/
   core/       Shared domain types, errors, audit helpers, external-content labels
   policy/     RBAC/ABAC evaluator and job-title presets
