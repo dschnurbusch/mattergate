@@ -1,0 +1,3 @@
+import type { GatewaySubject } from '@legal-mcp-gateway/core';
+const demoPresets: Record<string, string> = { 'demo-admin': 'firm-admin', 'demo-attorney': 'attorney', 'demo-paralegal': 'paralegal', 'demo-intake': 'intake', 'demo-readonly': 'read-only' };
+export function subjectFromHeaders(headers: { [key: string]: string | string[] | undefined }): GatewaySubject { const rawUser = headers['x-legal-mcp-user-id']; const userId = Array.isArray(rawUser) ? rawUser[0] : rawUser ?? 'demo-readonly'; return { organizationId: 'org_demo', userId, email: `${userId}@example.local`, jobTitlePreset: demoPresets[userId] ?? 'read-only' }; }

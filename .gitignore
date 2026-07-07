@@ -1,0 +1,22 @@
+# Generated package output
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.d.ts.map
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+.idea/
+.vscode/
+
+# Local research notes are intentionally untracked.
+# Distill durable decisions into tracked docs/*.md instead.
+docs/research/

@@ -1,0 +1,4 @@
+import { UnknownToolError } from '@legal-mcp-gateway/core';
+import type { ToolManifest } from '@legal-mcp-gateway/core';
+import type { Connector } from './sdk.js';
+export class ConnectorRegistry { private readonly connectors = new Map<string, Connector>(); private readonly tools = new Map<string, { connector: Connector; tool: ToolManifest }>(); register(connector: Connector): void { this.connectors.set(connector.manifest.key, connector); for (const tool of connector.manifest.tools) this.tools.set(tool.name, { connector, tool }); } listConnectors(): Connector[] { return [...this.connectors.values()]; } listTools(): ToolManifest[] { return [...this.tools.values()].map((e) => e.tool); } getTool(toolName: string) { const entry = this.tools.get(toolName); if (!entry) throw new UnknownToolError(toolName); return entry; } }

@@ -1,0 +1,4 @@
+import type { GatewaySubject, ToolManifest } from './types.js';
+export type AuditOutcome = 'allowed' | 'denied' | 'dry_run' | 'write_completed' | 'error';
+export interface AuditEvent { at: string; requestId?: string; organizationId: string; userId: string; connectorKey: string; toolName: string; action: string; resourceType: string; outcome: AuditOutcome; reason?: string; metadata?: Record<string, unknown>; }
+export function createAuditEvent(params: { subject: GatewaySubject; tool: ToolManifest; outcome: AuditOutcome; requestId?: string; reason?: string; metadata?: Record<string, unknown>; }): AuditEvent { return { at: new Date().toISOString(), requestId: params.requestId, organizationId: params.subject.organizationId, userId: params.subject.userId, connectorKey: params.tool.connectorKey, toolName: params.tool.name, action: params.tool.action, resourceType: params.tool.resourceType, outcome: params.outcome, reason: params.reason, metadata: params.metadata }; }

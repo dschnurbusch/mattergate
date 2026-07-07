@@ -1,0 +1,6 @@
+import { describe, expect, it } from 'vitest';
+import { mockLegalConnector } from '@legal-mcp-gateway/connectors';
+import { createGateway } from '../src/index.js';
+const gateway = createGateway({ connectors: [mockLegalConnector] });
+const paralegal = { organizationId: 'org_demo', userId: 'demo-paralegal', jobTitlePreset: 'paralegal' };
+describe('gateway', () => { it('filters tools by subject preset', () => { const tools = gateway.listTools({ ...paralegal, jobTitlePreset: 'read-only' }); expect(tools.map((t) => t.name)).toContain('mock_search_matters'); expect(tools.map((t) => t.name)).not.toContain('mock_create_task'); }); it('enforces permissions at invocation time', async () => { await expect(gateway.callTool({ subject: paralegal, toolName: 'mock_create_task', args: { matterId: 'matter_1001', title: 'Draft inventory' }, dryRun: false })).rejects.toThrow('dry_run'); }); it('allows paralegal task dry-run', async () => { const result = await gateway.callTool({ subject: paralegal, toolName: 'mock_create_task', args: { matterId: 'matter_1001', title: 'Draft inventory' }, dryRun: true }); expect(result.result).toMatchObject({ dryRun: true }); expect(result.auditEvent.outcome).toBe('dry_run'); }); });

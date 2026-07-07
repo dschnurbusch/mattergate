@@ -1,0 +1,32 @@
+{
+  "name": "legal-mcp-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hostable MCP permissions gateway for legal-tech tools.",
+  "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "packages/core",
+    "packages/policy",
+    "packages/connectors",
+    "packages/mcp",
+    "apps/server",
+    "apps/cli",
+    "apps/admin"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "verify": "npm run build && npm test",
+    "dev:server": "npm -w @legal-mcp-gateway/server run dev",
+    "dev:admin": "npm -w @legal-mcp-gateway/admin run dev",
+    "dev:stdio": "npm -w @legal-mcp-gateway/cli run dev -- stdio"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.2",
+    "typescript": "^5.9.3",
+    "tsx": "^4.21.0",
+    "vitest": "^4.0.15"
+  }
+}

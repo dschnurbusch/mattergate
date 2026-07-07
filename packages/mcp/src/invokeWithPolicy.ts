@@ -1,0 +1,7 @@
+import { ForbiddenToolError, createAuditEvent } from '@legal-mcp-gateway/core';
+import type { AuditEvent, GatewaySubject } from '@legal-mcp-gateway/core';
+import type { ConnectorRegistry } from '@legal-mcp-gateway/connectors';
+import { evaluatePolicy } from '@legal-mcp-gateway/policy';
+import type { PolicyRule } from '@legal-mcp-gateway/policy';
+export interface InvocationResult { result: unknown; auditEvent: AuditEvent; }
+export async function invokeWithPolicy(params: { registry: ConnectorRegistry; subject: GatewaySubject; toolName: string; args?: Record<string, unknown>; rules: PolicyRule[]; dryRun?: boolean; confirmed?: boolean; requestId?: string; }): Promise<InvocationResult> { const { connector, tool } = params.registry.getTool(params.toolName); const decision = evaluatePolicy({ subject: params.subject, tool, rules: params.rules, context: { dryRun: params.dryRun, confirmed: params.confirmed } }); if (!decision.allowed) throw new ForbiddenToolError(decision.reason); const result = await connector.invokeTool({ subject: params.subject, tool, args: params.args ?? {}, dryRun: params.dryRun, confirmed: params.confirmed, requestId: params.requestId }); const outcome = tool.mutates && params.dryRun === false ? 'write_completed' : tool.mutates ? 'dry_run' : 'allowed'; return { result: result.data, auditEvent: createAuditEvent({ subject: params.subject, tool, outcome, requestId: params.requestId, metadata: result.auditSummary }) }; }
