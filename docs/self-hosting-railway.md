@@ -134,17 +134,30 @@ This avoids placing maintainer-owned credentials in every self-hosted deployment
 - Vendor review screens and app names will belong to the self-hoster, not the Legal MCP Gateway maintainers.
 - Support burden is higher because each deployment can have different vendor app settings.
 
-### Optional future: maintainer-hosted OAuth broker
+### Preferred convenience path: hosted OAuth broker
 
-A maintainer-hosted broker could reduce vendor setup friction by owning an approved OAuth app and brokering authorization into self-hosted deployments. Treat this as an optional future product/design, not the default OSS template.
+A maintainer-hosted broker can reduce vendor setup friction by owning an approved OAuth app and brokering authorization into self-hosted deployments. This is acceptable for the project if the broker stays narrow, cheap, and security-focused.
+
+Cost target: near-zero. The broker should only handle install-time OAuth redirects and token handoff, not normal MCP traffic or vendor API calls. A Cloudflare Worker with KV/D1 for short-lived state is the preferred shape because the free tier is enough for expected install volume and there is no always-on container to pay for.
+
+Broker responsibilities:
+
+- Hold the maintainer-owned Lawmatics OAuth `client_secret` as a platform secret.
+- Use one stable broker callback URL registered with Lawmatics.
+- Validate self-hosted instance registration and redirect destinations.
+- Create short-lived OAuth state and handoff codes.
+- Exchange the Lawmatics authorization code server-side.
+- Deliver token material only to the requesting Mattergate instance, preferably encrypted to that instance's public key.
+- Delete short-lived handoff material after redemption or expiry.
+- Record minimal audit metadata without logging access tokens, client secrets, matter data, or raw OAuth codes.
 
 Broker considerations:
 
-- Requires a hosted service, trust boundary, operational security, uptime, abuse controls, and legal/privacy review.
-- Must avoid exposing maintainer client secrets to Railway deployments.
-- Needs clear tenant isolation, redirect URI validation, consent logging, and revocation support.
-- May be incompatible with vendor terms or customer data obligations for some legal-tech providers.
-- Should not be necessary for the base one-click Railway template.
+- This is a real trust boundary: the broker sees vendor OAuth codes and may briefly handle access tokens.
+- It must avoid exposing maintainer client secrets to Railway deployments.
+- It needs tenant isolation, redirect allowlists, signed state, replay protection, rate limits, abuse controls, consent logging, and revocation guidance.
+- It may require Lawmatics approval and must comply with vendor terms.
+- It should not store Lawmatics access tokens long-term unless Mattergate later offers a hosted/SaaS product.
 
 ## Lawmatics OAuth admin click flow
 
