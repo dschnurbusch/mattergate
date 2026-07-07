@@ -1,5 +1,19 @@
 # Railway-hosted OAuth broker plan
 
+## Broker is live
+
+Current Railway-provided broker URL:
+
+```text
+https://mattergate-oauth-broker-production.up.railway.app
+```
+
+Current Lawmatics OAuth callback URL to register with Lawmatics:
+
+```text
+https://mattergate-oauth-broker-production.up.railway.app/api/oauth/lawmatics/callback
+```
+
 ## Decision
 
 Use a small Railway-hosted OAuth broker as the preferred convenience path for Mattergate connector installs.
