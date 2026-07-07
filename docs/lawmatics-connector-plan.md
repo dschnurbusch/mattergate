@@ -178,7 +178,7 @@ This is secure and self-contained, but not literally zero credential setup.
 
 Preferred convenience path.
 
-- Mattergate maintainers operate an approved Lawmatics OAuth app and a narrow broker deployed on Railway from separate public repo [`dschnurbusch/mattergate-oauth-broker`](https://github.com/dschnurbusch/mattergate-oauth-broker).
+- Mattergate maintainers operate an approved Lawmatics OAuth app and a narrow broker deployed on Railway from separate private repo [`dschnurbusch/mattergate-oauth-broker`](https://github.com/dschnurbusch/mattergate-oauth-broker).
 - Self-hosted deployments redirect admins through the broker.
 - Broker handles the client secret and returns a short-lived installation handoff to the self-hosted instance.
 - Broker should not proxy normal MCP traffic or Lawmatics API calls.

@@ -26,7 +26,7 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 
 ## Next actions
 
-- [ ] Decide public repo name and GitHub organization/account.
+- [x] Create public repo at `dschnurbusch/mattergate`.
 - [ ] Add official MCP SDK transport adapters.
 - [ ] Add gateway OAuth login flow for remote HTTP MCP clients.
 - [ ] Add persistence layer.
@@ -35,7 +35,7 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 - [ ] Add real admin CRUD endpoints.
 - [ ] Build Lawmatics as the first real connector.
 - [ ] Convert Railway self-hosting plan into a tested template after persistence, auth, migrations, and secrets are production-ready.
-- [x] Design Railway-hosted OAuth broker with short-lived install handoff and strict redirect/instance validation in separate public repo `dschnurbusch/mattergate-oauth-broker`.
+- [x] Design Railway-hosted OAuth broker with short-lived install handoff and strict redirect/instance validation in separate private repo `dschnurbusch/mattergate-oauth-broker`.
 - [ ] Request/confirm Lawmatics developer app access for Dan's existing account.
 
 ## Important decisions

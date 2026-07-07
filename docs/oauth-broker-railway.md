@@ -42,7 +42,7 @@ Keep it separate from the main `mattergate` repo because the broker is a differe
 - It should not be included in the self-hosted Railway template.
 - It can later support a hosted/cloud Mattergate product without contaminating the self-hosted gateway boundary.
 
-The broker code can still be public/open-source if desired. Secrets live only in Railway variables.
+The broker repo is currently private. It can be open-sourced later if desired. Secrets live only in Railway variables.
 
 ## Railway deployment shape
 

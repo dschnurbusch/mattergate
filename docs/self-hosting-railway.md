@@ -138,7 +138,7 @@ Broker responsibilities:
 - Delete short-lived handoff material after redemption or expiry.
 - Record minimal audit metadata without logging access tokens, client secrets, matter data, or raw OAuth codes.
 
-Broker deployment is a separate repo/service: [`dschnurbusch/mattergate-oauth-broker`](https://github.com/dschnurbusch/mattergate-oauth-broker). This is a different trust boundary from the open-source self-hosted gateway. The broker code is public, but its Railway variables hold maintainer-owned OAuth secrets. It should not be included in the one-click self-hosted Railway template.
+Broker deployment is a separate private repo/service: [`dschnurbusch/mattergate-oauth-broker`](https://github.com/dschnurbusch/mattergate-oauth-broker). This is a different trust boundary from the open-source self-hosted gateway. The broker code may become public later if we want, but for now it stays private while the hosted-broker boundary and vendor OAuth approval path are still forming. Its Railway variables hold maintainer-owned OAuth secrets. It should not be included in the one-click self-hosted Railway template.
 
 See `docs/oauth-broker-railway.md` for the dedicated broker plan.
 
