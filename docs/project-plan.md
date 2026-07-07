@@ -44,11 +44,18 @@ A thin, secure policy-enforcing MCP gateway:
 2. Real MCP transport: official MCP SDK, stdio, Streamable HTTP, auth context resolution.
 3. Persistence/admin API: Postgres + Drizzle, orgs, users, memberships, policies, audits, connector installs.
 4. Secret vault/OAuth: encrypted credentials, BYO vendor app credentials, callback flow.
-5. First vendor connector: Clio or Lawmatics.
+5. First vendor connector: Lawmatics, because Dan can test against an existing account and Lawmatics has the clearest OAuth-scope gap.
+
+## Auth direction
+
+See `docs/auth-model.md`.
+
+The durable identity for permissions is the Legal MCP Gateway user, not the agent harness and not the vendor token. Hermes, Claude, ChatGPT, Cursor, and other MCP clients should each get their own OAuth grant/token for the same gateway user. The gateway then applies the same job-title preset, groups, policy rules, and audit rules on every tool call.
+
+For Lawmatics specifically, assume the vendor connection is broad/full-account access until proven otherwise. The gateway must enforce least privilege above Lawmatics.
 
 ## Open questions
 
 - Project name before public GitHub repo creation.
 - Local-first SQLite/PGlite vs self-host-first Postgres.
 - Neutral OSS project vs Schnurbusch Law internal-first branding.
-- Which connector goes first after the scaffold.

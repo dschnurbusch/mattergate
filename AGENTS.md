@@ -32,6 +32,7 @@ Tracked project docs live in `docs/`:
 
 - `docs/project-plan.md` — MVP scope, architecture, roadmap, and build phases.
 - `docs/project-tracker.md` — current status, decisions, next actions, and open questions.
+- `docs/auth-model.md` — user login, per-client MCP grants, token validation, and Lawmatics auth assumptions.
 - `docs/architecture.md` — system architecture.
 - `docs/policy-model.md` — RBAC/ABAC permission model.
 - `docs/connector-development.md` — how to add connectors safely.

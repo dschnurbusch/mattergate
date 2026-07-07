@@ -23,11 +23,12 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 
 - [ ] Decide public repo name and GitHub organization/account.
 - [ ] Add official MCP SDK transport adapters.
+- [ ] Add gateway OAuth login flow for remote HTTP MCP clients.
 - [ ] Add persistence layer.
 - [ ] Add secret vault.
 - [ ] Add real admin CRUD endpoints.
-- [ ] Pick first real connector.
-- [ ] Request developer/sandbox access for selected vendors.
+- [ ] Build Lawmatics as the first real connector.
+- [ ] Request/confirm Lawmatics developer app access for Dan's existing account.
 
 ## Important decisions
 
