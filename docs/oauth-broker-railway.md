@@ -31,7 +31,7 @@ Railway is also operationally consistent with Dan's normal GitHub → Railway au
 Use a separate repo/service for the broker, likely:
 
 ```text
-dschnurbusch/mattergate-oauth-broker
+https://github.com/dschnurbusch/mattergate-oauth-broker
 ```
 
 Keep it separate from the main `mattergate` repo because the broker is a different trust boundary:

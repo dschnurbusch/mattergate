@@ -35,7 +35,7 @@ Phase 1 scaffold created locally in `~/Code/legal-mcp-gateway`.
 - [ ] Add real admin CRUD endpoints.
 - [ ] Build Lawmatics as the first real connector.
 - [ ] Convert Railway self-hosting plan into a tested template after persistence, auth, migrations, and secrets are production-ready.
-- [ ] Design Railway-hosted OAuth broker with short-lived install handoff and strict redirect/instance validation, likely in separate `mattergate-oauth-broker` repo.
+- [x] Design Railway-hosted OAuth broker with short-lived install handoff and strict redirect/instance validation in separate public repo `dschnurbusch/mattergate-oauth-broker`.
 - [ ] Request/confirm Lawmatics developer app access for Dan's existing account.
 
 ## Important decisions
